@@ -22,7 +22,7 @@ public class PersonController {
     }
 
     @RequestMapping("/get")
-    public Person getPerson(@RequestParam String firstName) {
+    public List<Person> getPerson(@RequestParam String firstName) {
         return personService.getByFirstName(firstName);
     }
 
@@ -32,8 +32,9 @@ public class PersonController {
     }
 
     @RequestMapping("/update")
-    public Person update(@RequestParam String firstName, @RequestParam String lastName, @RequestParam int age) {
-        return personService.update(firstName, lastName, age);
+    public String update(@RequestParam String firstName, @RequestParam String lastName, @RequestParam int age) {
+        personService.update(firstName, lastName, age);
+        return "All people have been updated";
     }
 
     @RequestMapping("/delete")

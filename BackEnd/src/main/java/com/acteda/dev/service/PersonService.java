@@ -20,20 +20,27 @@ public class PersonService {
     public List<Person> getAll() {
         return personRepository.findAll();
     }
-    public Person getByFirstName(String firstName) {
+    public List<Person> getByFirstName(String firstName) {
         return personRepository.findByFirstName(firstName);
     }
-    public Person update(String firstName, String lastName, int age) {
-        Person p = personRepository.findByFirstName(firstName);
-        p.setLastName(lastName);
-        p.setAge(age);
-        return personRepository.save(p);
+    public String update(String firstName, String lastName, int age) {
+        List<Person> persons = personRepository.findByFirstName(firstName);
+
+        // this function makes no sense (refactor later)
+        for (Person person: persons) {
+            person.setLastName(lastName);
+            person.setAge(age);
+            personRepository.save(person);
+        }
+        return "all people updated";
     }
     public void deleteAll() {
         personRepository.deleteAll();
     }
     public void delete(String firstName) {
-        Person p = personRepository.findByFirstName(firstName);
-        personRepository.delete(p);
+        List<Person> p = personRepository.findByFirstName(firstName);
+        for (Person p2: p) {
+            personRepository.delete(p2);
+        }
     }
 }
